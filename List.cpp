@@ -80,7 +80,7 @@ void List<T>::clear()
 template<class T>
 void List<T>::reverse() {
 	Node<T>* tmp;
-	Node<T>* tmp2;
+	Node<T>* tmp2 = nullptr;
 	Node<T>* n = first;
 
 	if (n == nullptr)
@@ -90,7 +90,7 @@ void List<T>::reverse() {
 		tmp = n->getNext();
 		n->setNext(tmp2);
 		tmp2 = n;
-	} while (tmp != nullptr && n = tmp);
+	} while (tmp != nullptr && (n = tmp));
 
 	first = n;
 }
