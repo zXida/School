@@ -100,7 +100,7 @@ template<class T>
 string List<T>::toString(){
 	string s = "[";
 	for(Node<T>* n = first; n != nullptr; n = n->getNext()){
-		s += n->getElement();
+		s += to_string(n->getElement());
 		if(n->getNext() != nullptr)
 			s += ", ";
 	}
