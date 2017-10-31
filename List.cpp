@@ -95,15 +95,56 @@ void List<T>::reverse() {
 	first = n;
 }
 
+template<class T>
+bool List<T>::empty() {
+	return first == nullptr;
+}
 
 template<class T>
 string List<T>::toString(){
 	string s = "[";
 	for(Node<T>* n = first; n != nullptr; n = n->getNext()){
-		s += to_string(n->getElement());
+		s += n->getElement();
 		if(n->getNext() != nullptr)
 			s += ", ";
 	}
 	s += "]";
 	return s;
+}
+
+template<class T>
+void List<T>::erase(T element) {
+
+	if (first->getNext() == nullptr) {
+		if (first->getElement == element) {
+			delete first;
+			first = nullptr;
+		}
+		return;
+	}
+	delfirst(element);
+	for (Node<T>* n = first; n->getNext() != nullptr; n = n->getNext()) {
+		del(n, element);
+	}
+}
+
+template<class T>
+List<T> operator-(List<T> second) {
+
+}
+
+template<class T>
+void List<T>::delfirst(T element) {
+	if (first != nullptr && first->element == element) {
+		first = first->getNext();
+		delfirst(element);
+	}
+}
+
+template<class T>
+void List<T>::del(Node<T>* source, T element) {
+	if (source->getNext() != nullptr && source->getNext()->getElement() == element) {
+		source->setNext(source->getNext()->getNext());
+		del(source, element);
+	}
 }
