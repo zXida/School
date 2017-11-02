@@ -5,7 +5,7 @@ template <class T>
 class Node
 {
 	T element;
-	Node* next;
+	Node<T>* next;
 public:
 	Node();
 	~Node();
@@ -13,6 +13,6 @@ public:
 
 	T getElement();
 	void setElement(T);
-	Node* getNext();
+	Node<T>* getNext();
 	void setNext(Node*);
 };
