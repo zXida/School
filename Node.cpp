@@ -31,13 +31,13 @@ void Node<T>::setElement(T element)
 }
 
 template<class T>
-Node * Node<T>::getNext()
+Node<T>* Node<T>::getNext()
 {
 	return next;
 }
 
 template<class T>
-void Node<T>::setNext(Node* next)
+void Node<T>::setNext(Node<T>* next)
 {
 	this->next = next;
 }
