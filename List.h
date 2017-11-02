@@ -6,10 +6,10 @@
 template <class T>
 class List
 {
-	Node* first;
+	Node<T>* first;
 
 	void delfirst(T element);
-	void del(Node* source, T element);
+	void del(Node<T>* source, T element);
 public:
 	List();
 	~List();
