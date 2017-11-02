@@ -104,7 +104,7 @@ template<class T>
 string List<T>::toString(){
 	string s = "[";
 	for(Node<T>* n = first; n != nullptr; n = n->getNext()){
-		s += n->getElement();
+		s += to_string(n->getElement());
 		if(n->getNext() != nullptr)
 			s += ", ";
 	}
@@ -116,7 +116,7 @@ template<class T>
 void List<T>::erase(T element) {
 
 	if (first->getNext() == nullptr) {
-		if (first->getElement == element) {
+		if (first->getElement() == element) {
 			delete first;
 			first = nullptr;
 		}
@@ -135,16 +135,22 @@ List<T> operator-(List<T> second) {
 
 template<class T>
 void List<T>::delfirst(T element) {
-	if (first != nullptr && first->element == element) {
+	Node<T>* tmp;
+	if (first != nullptr && first->getElement() == element) {
+		tmp = first;
 		first = first->getNext();
+		delete tmp;
 		delfirst(element);
 	}
 }
 
 template<class T>
 void List<T>::del(Node<T>* source, T element) {
+	Node<T>* tmp;
 	if (source->getNext() != nullptr && source->getNext()->getElement() == element) {
+		tmp = source->getNext();
 		source->setNext(source->getNext()->getNext());
+		delete tmp;
 		del(source, element);
 	}
 }
