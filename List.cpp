@@ -146,3 +146,13 @@ List<T> List<T>::operator-(List<T> second) {
 	
 	return l;
 }
+
+template<class T>
+bool List<T>::contains(T element)
+{
+	for (Node<T>* n = first; n != nullptr; n = n->getNext()) {
+		if (n->getElement() == element)
+			return true;
+	}
+	return false;
+}
