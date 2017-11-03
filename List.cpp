@@ -14,14 +14,14 @@ List<T>::~List()
 template<class T>
 void List<T>::push_back(T element)
 {
-	Node<T>* tmp = new Node<T>(element);
-	Node<T>* _tmp = first;
-	if (_tmp == nullptr)
+	Node<T>* node = new Node<T>(element);
+	Node<T>* tmp = first;
+	if (tmp == nullptr)
 		return push_front(element);
-	while (_tmp->getNext() != nullptr) {
-		_tmp = _tmp->getNext();
+	while (tmp->getNext() != nullptr) {
+		tmp = tmp->getNext();
 	}
-	_tmp->setNext(tmp);
+	tmp->setNext(node);
 }
 
 template<class T>
@@ -35,34 +35,34 @@ void List<T>::push_front(T element)
 template<class T>
 T List<T>::pop_back()
 {
-	Node<T>* tmp;
-	T _tmp;
+	Node<T>* node = first;
+	T tmp;
 	if (first == nullptr)
 		throw exception("No elements in list");
-	tmp = first;
-	while (tmp->getNext() != nullptr) {
-		tmp = tmp->getNext();
-	}
-	_tmp = tmp->getElement();
-	delete tmp;
+	
+	while (node->getNext() != nullptr) 
+		node = node->getNext();
+	
+	tmp = node->getElement();
+	delete node;
 
-	return _tmp;
+	return tmp;
 }
 
 template<class T>
 T List<T>::pop_front()
 {
-	Node<T>* tmp;
-	T _tmp;
+	Node<T>* node = first;
+	T tmp;
+	
 	if (first == nullptr)
 		throw exception("No elements in list");
-	_tmp = first->getElement();
 	
-	tmp = first;
+	tmp = first->getElement();
 	first = first->getNext();
-	delete tmp;
+	delete node;
 
-	return _tmp;
+	return tmp;
 }
 
 template<class T>
@@ -71,7 +71,7 @@ void List<T>::clear()
 	Node<T>* tmp;
 	if (first == nullptr)
 		return;
-	for (Node<T>* n = first; n->getNext() != nullptr; n = tmp) {
+	for (Node<T>* n = first; n != nullptr; n = tmp) {
 		tmp = n->getNext();
 		delete n;
 	}
@@ -114,23 +114,24 @@ string List<T>::toString(){
 
 template<class T>
 void List<T>::erase(T element) {
-
-	if (first->getNext() == nullptr) {
-		if (first->getElement() == element) {
-			delete first;
-			first = nullptr;
-		}
-		return;
-	}
 	delfirst(element);
-	for (Node<T>* n = first; n->getNext() != nullptr; n = n->getNext()) {
+	
+	if (first == nullptr)
+		return;
+	
+	for (Node<T>* n = first->getNext(); n->getNext() != nullptr; n = n->getNext()) 
 		del(n, element);
-	}
+	
 }
 
 template<class T>
-List<T> operator-(List<T> second) {
-
+List<T> List<T>::operator-(List<T> second) {
+	List<T> l = *this;
+	
+	for(Node<T>* n = second.first; n != nullptr; n = n->getNext())
+		l.erase(n->getElement());
+	
+	return l;
 }
 
 template<class T>
