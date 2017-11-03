@@ -8,8 +8,6 @@ class List
 {
 	Node<T>* first;
 
-	void delfirst(T element);
-	void del(Node<T>* source, T element);
 public:
 	List();
 	~List();
