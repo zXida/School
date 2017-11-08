@@ -24,17 +24,45 @@ public:
 	void del(T element);
 
 	void reverse();
-	static ListAtt<T> merge(ListAtt<T> l1, ListAtt<T> l2);
+	ListAtt<T> merge(ListAtt<T> l);
 	void addInOrder(T element);
 
 	bool operator==(ListAtt<T>& second);
 	ListAtt<T> operator-(ListAtt<T> second);
 	ListAtt<T> operator+(ListAtt<T> second);
 
-	friend std::ostream& operator<<(ostream& o, ListAtt<T>& l);
-	friend std::istream& operator>>(istream& i, ListAtt<T>& l);
+	friend ostream& operator<<(ostream& o, ListAtt<T>& l) {
+		o << "[";
+		for (l.att = l.L; l.att != nullptr; l.att = l.att->getNext()) {
+			o << l.att->getElement();
+			if (l.att->getNext() != nullptr)
+				o << ", ";
+		}
+		o << "]";
+		return o;
+	}
+	friend istream& operator>>(istream& i, ListAtt<T>& l) {
+		T tmp;
+		i >> tmp;
+		l.append(tmp);
+		return i;
+	}
 
-	friend std::ofstream& operator<<(ofstream& o, ListAtt<T>& l);
-	friend std::ifstream& operator>>(ifstream& i, ListAtt<T>& l);
+	friend ofstream& operator<<(ofstream& o, ListAtt<T>& l) {
+		o << "[";
+		for (l.att = l.L; l.att != nullptr; l.att = l.att->getNext()) {
+			o << l.att->getElement();
+			if (l.att->getNext() != nullptr)
+				o << ", ";
+		}
+		o << "]";
+		return o;
+	}
+	friend ifstream& operator>>(ifstream& i, ListAtt<T>& l) {
+		T tmp;
+		i >> tmp;
+		l.append(tmp);
+		return i;
+	}
 };
 
