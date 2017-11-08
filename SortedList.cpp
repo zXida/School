@@ -1,16 +1,5 @@
 #include "SortedList.h"
 
-
-template<class T>
-void SortedList<T>::push_back(T element)
-{
-}
-
-template<class T>
-void SortedList<T>::push_front(T element)
-{
-}
-
 template<class T>
 void SortedList<T>::push(T element)
 {
