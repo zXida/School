@@ -111,11 +111,14 @@ void ListAtt<T>::reverse()
 }
 
 template<class T>
-static ListAtt<T> ListAtt<T>::merge(ListAtt<T> l1, ListAtt<T> l2)
+ListAtt<T> ListAtt<T>::merge(ListAtt<T> l)
 {
-	for (l2.att = l2.L; l2.att != nullptr; l2.att = l2.att->getNext())
-		l1.addInOrder(l2.att->getElement());
-	return l1;
+	ListAtt<T> myL;
+	for (att = L; att != nullptr; att = att->getNext())
+		myL.addInOrder(att->getElement());
+	for (l.att = l.L; l.att != nullptr; l.att = l.att->getNext())
+		myL.addInOrder(l.att->getElement());
+	return myL;
 }
 
 template<class T>
@@ -123,20 +126,32 @@ void ListAtt<T>::addInOrder(T element)
 {
 	Node<T>* tmp;
 	Node<T>* n = new Node<T>(element);
-	for (att = L; att != nullptr; att = att->getNext()) {
+
+	if (L == nullptr) {
+		L = n;
+		return;
+	}
+
+	tmp = L;
+
+	for (att = L; ; att = att->getNext()) {
 		if (att->getElement() > element) {
 			if (att == L) {
 				n->setNext(L);
 				L = n;
 			}
 			else {
-				n->setNext(tmp->getNext());
+				n->setNext(att);
 				tmp->setNext(n);
 			}
 			return;
 		}
+		if (att->getNext() == nullptr)
+			break;
+
+		tmp = att;
 	}
-	L = n;
+	att->setNext(n);
 }
 
 template<class T>
@@ -170,48 +185,4 @@ ListAtt<T> ListAtt<T>::operator+(ListAtt<T> second)
 		l.att->setNext(second.att);
 	}
 	return l;
-}
-
-template <class T>
-std::ostream & operator<<(ostream & o, ListAtt<T>& l)
-{
-	o << "[";
-	for (l.att = l.L; l.att != nullptr; l.att = l.att->getNext()) {
-		o << l.att->getElement();
-		if (l.att->getNext() != nullptr)
-			o << ", ";
-	}
-	o << "]";
-	return o;
-}
-
-template <class T>
-std::istream & operator>>(istream & i, ListAtt<T>& l)
-{
-	T tmp;
-	i >> tmp;
-	l.append(tmp);
-	return i;
-}
-
-template <class T>
-std::ofstream & operator<<(ofstream & o, ListAtt<T>& l)
-{
-	o << "[";
-	for (l.att = l.L; l.att != nullptr; l.att = l.att->getNext()) {
-		o << l.att->getElement();
-		if (l.att->getNext() != nullptr)
-			o << ", ";
-	}
-	o << "]";
-	return o;
-}
-
-template <class T>
-std::ifstream & operator>>(ifstream & i, ListAtt<T>& l)
-{
-	T tmp;
-	i >> tmp;
-	l.append(tmp);
-	return i;
 }
